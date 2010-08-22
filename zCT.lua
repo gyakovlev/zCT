@@ -5,7 +5,6 @@ Thanks to Shestak for showing me LightCT and inspiring me to make this mod.
 
 --Hide options we do not support for now.
 InterfaceOptionsCombatTextPanelLowManaHealth:Hide()
---InterfaceOptionsCombatTextPanelCombatState:Hide()
 InterfaceOptionsCombatTextPanelFriendlyHealerNames:Hide()
 
 local zCT_Frames = {}
@@ -17,7 +16,7 @@ local function zCT_SetDamageFont()
 	COMBAT_TEXT_HEIGHT = zCT_DamageFontHeight
 	COMBAT_TEXT_CRIT_MAXHEIGHT = zCT_DamageFontHeight + 20
 	COMBAT_TEXT_CRIT_MINHEIGHT = zCT_DamageFontHeight - 20
-	CombatTextFont:SetFont(zCT_Font, zCT_DamageFontHeight,"OUTLINE")
+--	CombatTextFont:SetFont(zCT_Font, zCT_DamageFontHeight,"OUTLINE")
 end
 zCT_SetDamageFont()
 
@@ -28,7 +27,7 @@ end
 
 
 local zCT_Damage = CreateFrame("ScrollingMessageFrame", "zCT_Damage", UIParent)
-zCT_Damage:SetFont(zCT_Font, 16, "OUTLINE")
+zCT_Damage:SetFont(zCT_Font, 18, "OUTLINE")
 zCT_Damage:SetShadowColor(0, 0, 0, 0)
 zCT_Damage:SetFadeDuration(0.2)
 zCT_Damage:SetInsertMode"TOP"
@@ -42,7 +41,7 @@ zCT_Damage:SetPoint("CENTER", -384, -192)
 zCT_Frames[1] = zCT_Damage
 
 local zCT_Heal = CreateFrame("ScrollingMessageFrame", "zCT_Heal", UIParent)
-zCT_Heal:SetFont(zCT_Font, 16, "OUTLINE")
+zCT_Heal:SetFont(zCT_Font, 18, "OUTLINE")
 zCT_Heal:SetShadowColor(0, 0, 0, 0)
 zCT_Heal:SetFadeDuration(0.2)
 zCT_Heal:SetInsertMode"TOP"
@@ -56,7 +55,7 @@ zCT_Heal:SetPoint("CENTER", -256, -192)
 zCT_Frames[2] = zCT_Heal
 
 local zCT_Text = CreateFrame("ScrollingMessageFrame", "zCT_Text", UIParent)
-zCT_Text:SetFont(zCT_Font, 16, "OUTLINE")
+zCT_Text:SetFont(zCT_Font, 20, "OUTLINE")
 zCT_Text:SetShadowColor(0, 0, 0, 0)
 zCT_Text:SetFadeDuration(0.2)
 zCT_Text:SetInsertMode"TOP"
@@ -140,8 +139,11 @@ function zCT_OnLoad()
 		debugprint("Enabling reactive abilities")
 		zCT_Events["SPELL_ACTIVE"] = {frame = 3, prefix = "+", arg2 = true, r = 1, g = .82, b = 0}
 	end
-
 --[[Doesn't work for now.
+	if tonumber(_G["COMBAT_TEXT_SHOW_COMBO_POINTS"]) == 1 then
+		debugprint("Enabling combo points")
+		zCT_Events["COMBO_POINTS"] = {frame = 3, prefix = "+", arg2 = true, r = 1, g = .82, b = 0}
+	end
 	if tonumber(_G["COMBAT_TEXT_SHOW_LOW_HEALTH_MANA"]) == 1 then
 		debugprint("Enabling Low Health/Mana display")
 		zCT_Events["HEALTH_LOW"] = {frame = 3, prefix = "!", arg2 = true, r = 1, g = .1, b = .1}
@@ -192,11 +194,16 @@ function events:PLAYER_REGEN_DISABLED(...)
 		zCT_Text:AddMessage("+"..ENTERING_COMBAT,1,.1,.1)
 	end
 end
+function events:UNIT_COMBO_POINTS(...)
+	if tonumber(_G["COMBAT_TEXT_SHOW_COMBO_POINTS"]) == 1 then
+		zCT_Text:AddMessage(format(COMBAT_TEXT_COMBO_POINTS,GetComboPoints("player", target)),1,.82,.0)
+	end
+end
 frame:SetScript("OnEvent", function(self, event, ...)
  events[event](self, ...); -- call one of the functions above
 end);
 for k, v in pairs(events) do
- frame:RegisterEvent(k); -- Register all events for which handlers have been defined
+	frame:RegisterEvent(k); -- Register all events for which handlers have been defined
 end
 
 
