@@ -4,7 +4,6 @@ Thanks to Shestak for showing me LightCT and inspiring me to make this mod.
 ]]
 
 --Hide options we do not support for now.
-InterfaceOptionsCombatTextPanelLowManaHealth:Hide()
 InterfaceOptionsCombatTextPanelFriendlyHealerNames:Hide()
 
 local zCT_Frames = {}
