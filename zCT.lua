@@ -1,4 +1,9 @@
-local zCTframes = {}
+--[[
+Big Thanks to ALZA and his awesome LightCT, this addon is heavily based on it.
+Thanks to Shestak for showing me LightCT and inspiring me to make this mod.
+]]
+local zCT_Frames = {}
+local zCT_Font
 local zCT_Damage = CreateFrame("ScrollingMessageFrame", "zCT_Damage", UIParent)
 zCT_Damage:SetFont("Fonts\\hooge.ttf", 16, "OUTLINE")
 zCT_Damage:SetShadowColor(0, 0, 0, 0)
@@ -7,11 +12,11 @@ zCT_Damage:SetInsertMode"TOP"
 zCT_Damage:SetTimeVisible(3)
 zCT_Damage:SetMaxLines(150)
 zCT_Damage:SetSpacing(1)
-zCT_Damage:SetWidth(400)
-zCT_Damage:SetHeight(140)
+zCT_Damage:SetWidth(150)
+zCT_Damage:SetHeight(150)
 zCT_Damage:SetJustifyH("LEFT")
 zCT_Damage:SetPoint("CENTER", 0, 90)
-zCTframes[1] = zCT_Damage
+zCT_Frames[1] = zCT_Damage
 
 local zCT_Heal = CreateFrame("ScrollingMessageFrame", "zCT_Heal", UIParent)
 zCT_Heal:SetFont("Fonts\\hooge.ttf", 16, "OUTLINE")
@@ -21,11 +26,11 @@ zCT_Heal:SetInsertMode"TOP"
 zCT_Heal:SetTimeVisible(3)
 zCT_Heal:SetMaxLines(150)
 zCT_Heal:SetSpacing(1)
-zCT_Heal:SetWidth(400)
-zCT_Heal:SetHeight(140)
+zCT_Heal:SetWidth(150)
+zCT_Heal:SetHeight(150)
 zCT_Heal:SetJustifyH("LEFT")
 zCT_Heal:SetPoint("CENTER", 0, -90)
-zCTframes[2] = zCT_Heal
+zCT_Frames[2] = zCT_Heal
 
 local zCT_Text = CreateFrame("ScrollingMessageFrame", "zCT_Text", UIParent)
 zCT_Text:SetFont("Fonts\\hooge.ttf", 16, "OUTLINE")
@@ -39,7 +44,7 @@ zCT_Text:SetWidth(400)
 zCT_Text:SetHeight(140)
 zCT_Text:SetJustifyH("CENTER")
 zCT_Text:SetPoint("CENTER", 0, 0)
-zCTframes[3] = zCT_Text
+zCT_Frames[3] = zCT_Text
 
 local tbl = {
 	["DAMAGE"] = 		{frame = 1, prefix =  "-",	arg2 = true, 		r = 1, 		g = 0.1, 	b = 0.1},
@@ -66,15 +71,10 @@ local tbl = {
 
 local info
 local template = "-%s (%s)"
---local frames = {"zCT_Damage", "zCT_Heal", "zCT_Text"}
 Blizzard_CombatText_OnEvent = CombatText_OnEvent
---local events = CreateFrame"Frame"
---events:RegisterEvent"COMBAT_TEXT_UPDATE"
---events:SetScript("OnEvent", function(self, event, subev, arg2, arg3)
 
-function zCT_OnEvent(self, event, subev, arg2, arg3)
+local function zCT_OnEvent(self, event, subev, arg2, arg3)
 	info = tbl[subev]
---	frames = zCT_
 	if(info) then
 		local msg = info.prefix or ""
 		if(info.spec) then
@@ -85,19 +85,16 @@ function zCT_OnEvent(self, event, subev, arg2, arg3)
 			if(info.arg2) then msg = msg..arg2 end
 			if(info.arg3) then msg = msg..arg3 end
 		end
-		zCTframes[info.frame]:AddMessage(msg, info.r, info.g, info.b)
+		zCT_Frames[info.frame]:AddMessage(msg, info.r, info.g, info.b)
 	end
---end)
 end
+
 Blizzard_CombatText_AddMessage = CombatText_AddMessage
+
+-- Override of Blizz CT fuction to redirect messages from other addons to zCT_Text frame.
+
 function CombatText_AddMessage(message, scrollFunction, r, g, b, displayType, isStaggered)
---local msg = ""
 zCT_Text:AddMessage(message,r,g,b)
 end
 
 CombatText:SetScript("OnEvent",zCT_OnEvent)
---CombatText:SetScript("OnUpdate", nil)
---CombatText:SetScript("OnEvent", nil)
---CombatText:UnregisterAllEvents()
-
-
