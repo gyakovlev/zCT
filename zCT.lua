@@ -5,6 +5,21 @@ Thanks to Shestak for showing me LightCT and inspiring me to make this mod.
 
 local zCT_Frames = {}
 local zCT_Font = "Interface\\AddOns\\zCT\\font.ttf"
+local zCT_DamageFontHeight = 100 --This number just inreases font quality.
+--Set unit damage and healing font
+local function zCT_SetDamageFont()
+	DAMAGE_TEXT_FONT = zCT_Font
+	COMBAT_TEXT_HEIGHT = zCT_DamageFontHeight
+	COMBAT_TEXT_CRIT_MAXHEIGHT = zCT_DamageFontHeight + 2
+	COMBAT_TEXT_CRIT_MINHEIGHT = zCT_DamageFontHeight - 2
+	CombatTextFont:SetFont(zCT_Font, zCT_DamageFontHeight,"OUTLINE")
+end
+zCT_SetDamageFont()
+local debugprint = function(msg)
+    print("|cffC495DDz|rCT debug:", tostring(msg))
+end
+
+
 local zCT_Damage = CreateFrame("ScrollingMessageFrame", "zCT_Damage", UIParent)
 zCT_Damage:SetFont(zCT_Font, 16, "OUTLINE")
 zCT_Damage:SetShadowColor(0, 0, 0, 0)
@@ -57,7 +72,7 @@ zCT_Events = {
 function zCT_OnLoad()
 --	LoadAddOn("Blizzard_CombatText")
 	if tonumber(_G["SHOW_COMBAT_TEXT"]) == 1 then
-		print("Enabling basic combattext (damage/heal/reactive abilities)")
+		debugprint("Enabling basic combattext (damage/heal/reactive abilities)")
 		zCT_Events["DAMAGE"] = {frame = 1, prefix =  "-", arg2 = true, r = 1, g = 0.1, b = 0.1}
 		zCT_Events["DAMAGE_CRIT"] = {frame = 1, prefix = "c-", arg2 = true, r = 1, g = 0.1, b = 0.1}
 		zCT_Events["SPELL_DAMAGE"] = {frame = 1, prefix =  "-",	arg2 = true, r = 0.79, g = 0.3, b = 0.85}
@@ -69,12 +84,12 @@ function zCT_OnLoad()
 
 	end
 	if tonumber(_G["COMBAT_TEXT_SHOW_AURAS"]) == 1 then
-		print("enabling auras")
+		debugprint("enabling auras")
 		zCT_Events["SPELL_AURA_START"] = {frame = 3, prefix = "+", arg2 = true, r = 1, g = .5, b = .5}
 		zCT_Events["SPELL_AURA_END"] = {frame = 3, prefix = "-", arg2 = true, r = .5, g = .5, b = .5}
 	end
 	if tonumber(_G["COMBAT_TEXT_SHOW_DODGE_PARRY_MISS"]) == 1 then
-		print("enabling dodge,parry,miss")
+		debugprint("enabling dodge,parry,miss")
 		zCT_Events["MISS"] = {frame = 1, prefix = "Miss", r = 1, g = .1, b = .1}
 		zCT_Events["DODGE"] = {frame = 1, prefix = "Dodge", r = 1, g = .1, b = .1}
 		zCT_Events["PARRY"] = {frame = 1, prefix = "Parry", r = 1, g = .1, b = .1}
@@ -91,7 +106,7 @@ function zCT_OnLoad()
 		zCT_Events["SPELL_REFLECT"] = {frame = 1, prefix = "Reflect", r = 1, g = 1, b = 1}
 	end
 	if  tonumber(_G["COMBAT_TEXT_SHOW_RESISTANCES"]) == 1 then
-		print("Enabling resists")
+		debugprint("Enabling resists")
 		zCT_Events["RESIST"] = {frame = 1, prefix = "Resist", 	spec = true, 		r = 1, 		g = 0.1, 	b = 0.1}
 		zCT_Events["BLOCK"] = {frame = 1, prefix = "Block", 	spec = true,		r = 1, 		g = 0.1, 	b = 0.1}
 		zCT_Events["ABSORB"] = {frame = 1, prefix = "Absorb", 	spec = true, 		r = 1, 		g = 0.1, 	b = 0.1}
@@ -100,11 +115,11 @@ function zCT_OnLoad()
 		zCT_Events["SPELL_ABSORBED"] = {frame = 1, prefix = "Absorb", spec = true, r = 0.79, g = 0.3, b = 0.85}
 	end
 	if tonumber(_G["COMBAT_TEXT_SHOW_ENERGIZE"]) == 1 then
-		print("Enabling energize")
+		debugprint("Enabling energize")
 		zCT_Events["ENERGIZE"] = {frame = 3, prefix = "+", arg2 = true, r = .1, g = .1, b = 1}
 	end
 	if tonumber(_G["COMBAT_TEXT_SHOW_PERIODIC_ENERGIZE"]) == 1 then
-		print("Enabling periodic energize")
+		debugprint("Enabling periodic energize")
 		zCT_Events["ENERGIZE"] = {frame = 3, prefix = "+", arg2 = true, r = .1, g = .1, b = 1}
 	end
 
