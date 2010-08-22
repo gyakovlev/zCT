@@ -9,6 +9,7 @@ InterfaceOptionsCombatTextPanelFriendlyHealerNames:Hide()
 local zCT_Frames = {}
 local zCT_Font = "Interface\\AddOns\\zCT\\font.ttf"
 local zCT_DamageFontHeight = 25 --This number just inreases font quality.
+
 --Set unit damage and healing font
 local function zCT_SetDamageFont()
 	DAMAGE_TEXT_FONT = zCT_Font
@@ -132,16 +133,6 @@ local function zCT_OnLoad()
 		--debugprint("Enabling reactive abilities")
 		zCT_Events["SPELL_ACTIVE"] = {frame = 3, prefix = "+", arg2 = true, r = 1, g = .82, b = 0}
 	end
---[[Doesn't work for now.
-	if tonumber(_G["COMBAT_TEXT_SHOW_COMBO_POINTS"]) == 1 then
-		--debugprint("Enabling combo points")
-		zCT_Events["COMBO_POINTS"] = {frame = 3, prefix = "+", arg2 = true, r = 1, g = .82, b = 0}
-	end
-	if tonumber(_G["COMBAT_TEXT_SHOW_LOW_HEALTH_MANA"]) == 1 then
-		--debugprint("Enabling Low Health/Mana display")
-		zCT_Events["HEALTH_LOW"] = {frame = 3, prefix = "!", arg2 = true, r = 1, g = .1, b = .1}
-		zCT_Events["MANA_LOW"] = {frame = 3, prefix = "!", arg2 = true, r = 1, g = .1, b = .1}
-	end]]
 end
 local info
 local template = "-%s (%s)"
@@ -164,7 +155,6 @@ local function zCT_OnEvent(self, event, type, arg2, arg3)
 end
 
 -- Override Blizz CT fuction to redirect messages from other addons to zCT_Text frame.
-
 Blizzard_CombatText_AddMessage = CombatText_AddMessage
 function CombatText_AddMessage(message, scrollFunction, r, g, b, displayType, isStaggered)
 zCT_Text:AddMessage(message,r,g,b)
@@ -172,7 +162,7 @@ end
 
 
 CombatText:SetScript("OnEvent", zCT_OnEvent)
-
+--Register shit and some events that don't fire in COMBAT_TEXT_UPDATE
 local frame, events = CreateFrame("Frame"), {};
 function events:PLAYER_ENTERING_WORLD(...)
 	zCT_OnLoad()
