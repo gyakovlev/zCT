@@ -19,10 +19,10 @@ local function zCT_SetDamageFont()
 end
 zCT_SetDamageFont()
 
---My debugging fancy printer, feel free to remove.
+--[[My debugging fancy printer, feel free to remove.
 local debugprint = function(msg)
     print("|cffC495DDz|rCT debug:", tostring(msg))
-end
+end]]
 
 
 local zCT_Damage = CreateFrame("ScrollingMessageFrame", "zCT_Damage", UIParent)
@@ -70,7 +70,7 @@ zCT_Frames[3] = zCT_Text
 local zCT_Events = {}
 local function zCT_OnLoad()
 	if tonumber(_G["SHOW_COMBAT_TEXT"]) == 1 then
-		debugprint("Enabling basic CT (damage/heal/procs)")
+		--debugprint("Enabling basic CT (damage/heal/procs)")
 		zCT_Events["DAMAGE"] = {frame = 1, prefix =  "-", arg2 = true, r = 1, g = 0.1, b = 0.1}
 		zCT_Events["DAMAGE_CRIT"] = {frame = 1, prefix = "c-", arg2 = true, r = 1, g = 0.1, b = 0.1}
 		zCT_Events["SPELL_DAMAGE"] = {frame = 1, prefix =  "-",	arg2 = true, r = 0.79, g = 0.3, b = 0.85}
@@ -82,12 +82,12 @@ local function zCT_OnLoad()
 
 	end
 	if tonumber(_G["COMBAT_TEXT_SHOW_AURAS"]) == 1 then
-		debugprint("enabling auras")
+		--debugprint("enabling auras")
 		zCT_Events["SPELL_AURA_START"] = {frame = 3, prefix = "+", arg2 = true, r = 1, g = .5, b = .5}
 		zCT_Events["SPELL_AURA_END"] = {frame = 3, prefix = "-", arg2 = true, r = .5, g = .5, b = .5}
 	end
 	if tonumber(_G["COMBAT_TEXT_SHOW_DODGE_PARRY_MISS"]) == 1 then
-		debugprint("enabling dodge,parry,miss")
+		--debugprint("enabling dodge,parry,miss")
 		zCT_Events["MISS"] = {frame = 1, prefix = "Miss", r = 1, g = .1, b = .1}
 		zCT_Events["DODGE"] = {frame = 1, prefix = "Dodge", r = 1, g = .1, b = .1}
 		zCT_Events["PARRY"] = {frame = 1, prefix = "Parry", r = 1, g = .1, b = .1}
@@ -104,7 +104,7 @@ local function zCT_OnLoad()
 		zCT_Events["SPELL_REFLECT"] = {frame = 1, prefix = "Reflect", r = 1, g = 1, b = 1}
 	end
 	if  tonumber(_G["COMBAT_TEXT_SHOW_RESISTANCES"]) == 1 then
-		debugprint("Enabling resists")
+		--debugprint("Enabling resists")
 		zCT_Events["RESIST"] = {frame = 1, prefix = "Resist", 	spec = true, 		r = 1, 		g = 0.1, 	b = 0.1}
 		zCT_Events["BLOCK"] = {frame = 1, prefix = "Block", 	spec = true,		r = 1, 		g = 0.1, 	b = 0.1}
 		zCT_Events["ABSORB"] = {frame = 1, prefix = "Absorb", 	spec = true, 		r = 1, 		g = 0.1, 	b = 0.1}
@@ -113,32 +113,32 @@ local function zCT_OnLoad()
 		zCT_Events["SPELL_ABSORBED"] = {frame = 1, prefix = "Absorb", spec = true, r = 0.79, g = 0.3, b = 0.85}
 	end
 	if tonumber(_G["COMBAT_TEXT_SHOW_ENERGIZE"]) == 1 then
-		debugprint("Enabling energize")
+		--debugprint("Enabling energize")
 		zCT_Events["ENERGIZE"] = {frame = 3, prefix = "+", arg2 = true, r = .1, g = .1, b = 1}
 	end
 	if tonumber(_G["COMBAT_TEXT_SHOW_PERIODIC_ENERGIZE"]) == 1 then
-		debugprint("Enabling periodic energize")
+		--debugprint("Enabling periodic energize")
 		zCT_Events["PERIODIC_ENERGIZE"] = {frame = 3, prefix = "+", arg2 = true, r = .1, g = .1, b = 1}
 	end
 	if tonumber(_G["COMBAT_TEXT_SHOW_HONOR_GAINED"]) == 1 then
-		debugprint("Enabling honor display")
+		--debugprint("Enabling honor display")
 		zCT_Events["HONOR_GAINED"] = {frame = 3, prefix = "+", arg2 = true, r = .1, g = .1, b = 1}
 	end
 	if tonumber(_G["COMBAT_TEXT_SHOW_REPUTATION"]) == 1 then
-		debugprint("Enabling rep display")
+		--debugprint("Enabling rep display")
 		zCT_Events["FACTION"] = {frame = 3, prefix = "+", arg2 = true, r = .1, g = .1, b = 1}
 	end
 	if tonumber(_G["COMBAT_TEXT_SHOW_REACTIVES"]) == 1 then
-		debugprint("Enabling reactive abilities")
+		--debugprint("Enabling reactive abilities")
 		zCT_Events["SPELL_ACTIVE"] = {frame = 3, prefix = "+", arg2 = true, r = 1, g = .82, b = 0}
 	end
 --[[Doesn't work for now.
 	if tonumber(_G["COMBAT_TEXT_SHOW_COMBO_POINTS"]) == 1 then
-		debugprint("Enabling combo points")
+		--debugprint("Enabling combo points")
 		zCT_Events["COMBO_POINTS"] = {frame = 3, prefix = "+", arg2 = true, r = 1, g = .82, b = 0}
 	end
 	if tonumber(_G["COMBAT_TEXT_SHOW_LOW_HEALTH_MANA"]) == 1 then
-		debugprint("Enabling Low Health/Mana display")
+		--debugprint("Enabling Low Health/Mana display")
 		zCT_Events["HEALTH_LOW"] = {frame = 3, prefix = "!", arg2 = true, r = 1, g = .1, b = .1}
 		zCT_Events["MANA_LOW"] = {frame = 3, prefix = "!", arg2 = true, r = 1, g = .1, b = .1}
 	end]]
