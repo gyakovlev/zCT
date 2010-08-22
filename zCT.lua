@@ -199,6 +199,44 @@ function events:UNIT_COMBO_POINTS(...)
 		zCT_Text:AddMessage(format(COMBAT_TEXT_COMBO_POINTS,GetComboPoints("player", target)),1,.82,.0)
 	end
 end
+function events:UNIT_MANA(...)
+	if tonumber(_G["COMBAT_TEXT_SHOW_LOW_HEALTH_MANA"]) == 1 then
+		if ( arg1 == "player" ) then
+			local powerType, powerToken = UnitPowerType("player");
+				if ( powerToken == "MANA" and (UnitPower("player") / UnitPowerMax("player")) <= COMBAT_TEXT_LOW_MANA_THRESHOLD ) then
+					if ( not CombatText.lowMana ) then
+						messageType = "MANA_LOW";
+						zCT_Text:AddMessage(MANA_LOW,1,.1,.1);
+						CombatText.lowMana = 1;
+					end
+				else
+					CombatText.lowMana = nil;
+				end
+				if ( not messageType ) then
+					return;
+				end
+			
+		end
+	end
+end
+function events:UNIT_HEALTH(...)
+	if tonumber(_G["COMBAT_TEXT_SHOW_LOW_HEALTH_MANA"]) == 1 then
+		if ( arg1 == "player" ) then
+			if ( UnitHealth("player")/UnitHealthMax("player") <= COMBAT_TEXT_LOW_HEALTH_THRESHOLD ) then
+				if ( not CombatText.lowHealth ) then
+					messageType = "HEALTH_LOW";
+					zCT_Text:AddMessage(HEALTH_LOW,1,.1,.1);
+					CombatText.lowHealth = 1;
+				end
+			else
+				CombatText.lowHealth = nil;
+			end
+		end
+		if ( not messageType ) then
+			return;
+		end
+	end
+end		
 frame:SetScript("OnEvent", function(self, event, ...)
  events[event](self, ...); -- call one of the functions above
 end);
