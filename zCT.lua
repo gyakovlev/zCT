@@ -3,6 +3,11 @@ Big Thanks to ALZA and his awesome LightCT, this addon is based on it.
 Thanks to Shestak for showing me LightCT and inspiring me to make this mod.
 ]]
 
+--Hide options we do not support for now.
+InterfaceOptionsCombatTextPanelLowManaHealth:Hide()
+InterfaceOptionsCombatTextPanelCombatState:Hide()
+InterfaceOptionsCombatTextPanelFriendlyHealerNames:Hide()
+
 local zCT_Frames = {}
 local zCT_Font = "Interface\\AddOns\\zCT\\font.ttf"
 local zCT_DamageFontHeight = 100 --This number just inreases font quality.
@@ -65,16 +70,15 @@ zCT_Text:SetPoint("CENTER", 0, 192)
 zCT_Frames[3] = zCT_Text
 
 zCT_Events = {
---[[	["ENTERING_COMBAT"] =	{frame = 3, prefix = "+", 	arg2 = true, 		r = 1,		g = .1,		b = .1},
+--[[
+	["ENTERING_COMBAT"] =	{frame = 3, prefix = "+", 	arg2 = true, 		r = 1,		g = .1,		b = .1},
 	["LEAVING_COMBAT"] =	{frame = 3, prefix = "-", 	arg2 = true, 		r = 1,		g = .1,		b = .1},
-	
-	["HONOR_GAINED"] =	{frame = 3, prefix = "+", 	arg2 = true, 		r = .1,		g = .1,		b = 1},
-	["FACTION"] =		{frame = 3, prefix = "+", 	arg2 = true, 		r = .1,		g = .1,		b = 1},]]
+]]
 }
 function zCT_OnLoad()
 --	LoadAddOn("Blizzard_CombatText")
 	if tonumber(_G["SHOW_COMBAT_TEXT"]) == 1 then
-		debugprint("Enabling basic combattext (damage/heal/reactive abilities)")
+		debugprint("Enabling basic CT (damage/heal/procs)")
 		zCT_Events["DAMAGE"] = {frame = 1, prefix =  "-", arg2 = true, r = 1, g = 0.1, b = 0.1}
 		zCT_Events["DAMAGE_CRIT"] = {frame = 1, prefix = "c-", arg2 = true, r = 1, g = 0.1, b = 0.1}
 		zCT_Events["SPELL_DAMAGE"] = {frame = 1, prefix =  "-",	arg2 = true, r = 0.79, g = 0.3, b = 0.85}
@@ -124,7 +128,25 @@ function zCT_OnLoad()
 		debugprint("Enabling periodic energize")
 		zCT_Events["ENERGIZE"] = {frame = 3, prefix = "+", arg2 = true, r = .1, g = .1, b = 1}
 	end
+	if tonumber(_G["COMBAT_TEXT_SHOW_HONOR_GAINED"]) == 1 then
+		debugprint("Enabling honor display")
+		zCT_Events["HONOR_GAINED"] = {frame = 3, prefix = "+", arg2 = true, r = .1, g = .1, b = 1}
+	end
+	if tonumber(_G["COMBAT_TEXT_SHOW_REPUTATION"]) == 1 then
+		debugprint("Enabling rep display")
+		zCT_Events["FACTION"] = {frame = 3, prefix = "+", arg2 = true, r = .1, g = .1, b = 1}
+	end
+	if tonumber(_G["COMBAT_TEXT_SHOW_REACTIVES"]) == 1 then
+		debugprint("Enabling reactive abilities")
+		zCT_Events["SPELL_ACTIVE"] = {frame = 3, prefix = "+", arg2 = true, r = 1, g = .82, b = 0}
+	end
 
+--[[Doesn't work for now.
+	if tonumber(_G["COMBAT_TEXT_SHOW_LOW_HEALTH_MANA"]) == 1 then
+		debugprint("Enabling Low Health/Mana display")
+		zCT_Events["HEALTH_LOW"] = {frame = 3, prefix = "!", arg2 = true, r = 1, g = .1, b = .1}
+		zCT_Events["MANA_LOW"] = {frame = 3, prefix = "!", arg2 = true, r = 1, g = .1, b = .1}
+	end]]
 end
 local info
 local template = "-%s (%s)"
