@@ -67,14 +67,8 @@ zCT_Text:SetJustifyH("CENTER")
 zCT_Text:SetPoint("CENTER", 0, 192)
 zCT_Frames[3] = zCT_Text
 
-zCT_Events = {
---[[
-	["ENTERING_COMBAT"] =	{frame = 3, prefix = "+", 	arg2 = true, 		r = 1,		g = .1,		b = .1},
-	["LEAVING_COMBAT"] =	{frame = 3, prefix = "-", 	arg2 = true, 		r = 1,		g = .1,		b = .1},
-]]
-}
-function zCT_OnLoad()
---	LoadAddOn("Blizzard_CombatText")
+local zCT_Events = {}
+local function zCT_OnLoad()
 	if tonumber(_G["SHOW_COMBAT_TEXT"]) == 1 then
 		debugprint("Enabling basic CT (damage/heal/procs)")
 		zCT_Events["DAMAGE"] = {frame = 1, prefix =  "-", arg2 = true, r = 1, g = 0.1, b = 0.1}
