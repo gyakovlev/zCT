@@ -1,0 +1,8 @@
+## Interface: 30300
+## Title: zCT
+## Notes: Simple combat text mod
+## Author: Affli (Based on LightCT by ALZA)
+## Version: 1.0
+## RequiredDeps: Blizzard_CombatText
+
+zCT.lua
