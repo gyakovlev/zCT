@@ -5,18 +5,18 @@ Thanks to Shestak for showing me LightCT and inspiring me to make this mod.
 
 --Hide options we do not support for now.
 InterfaceOptionsCombatTextPanelLowManaHealth:Hide()
-InterfaceOptionsCombatTextPanelCombatState:Hide()
+--InterfaceOptionsCombatTextPanelCombatState:Hide()
 InterfaceOptionsCombatTextPanelFriendlyHealerNames:Hide()
 
 local zCT_Frames = {}
 local zCT_Font = "Interface\\AddOns\\zCT\\font.ttf"
-local zCT_DamageFontHeight = 100 --This number just inreases font quality.
+local zCT_DamageFontHeight = 25 --This number just inreases font quality.
 --Set unit damage and healing font
 local function zCT_SetDamageFont()
 	DAMAGE_TEXT_FONT = zCT_Font
 	COMBAT_TEXT_HEIGHT = zCT_DamageFontHeight
-	COMBAT_TEXT_CRIT_MAXHEIGHT = zCT_DamageFontHeight + 2
-	COMBAT_TEXT_CRIT_MINHEIGHT = zCT_DamageFontHeight - 2
+	COMBAT_TEXT_CRIT_MAXHEIGHT = zCT_DamageFontHeight + 20
+	COMBAT_TEXT_CRIT_MINHEIGHT = zCT_DamageFontHeight - 20
 	CombatTextFont:SetFont(zCT_Font, zCT_DamageFontHeight,"OUTLINE")
 end
 zCT_SetDamageFont()
@@ -175,9 +175,28 @@ function CombatText_AddMessage(message, scrollFunction, r, g, b, displayType, is
 zCT_Text:AddMessage(message,r,g,b)
 end
 
-local zCT = CreateFrame"Frame"
-zCT:RegisterEvent"PLAYER_ENTERING_WORLD"
-zCT:SetScript("OnEvent", zCT_OnLoad)
+
 CombatText:SetScript("OnEvent", zCT_OnEvent)
+
+local frame, events = CreateFrame("Frame"), {};
+function events:PLAYER_ENTERING_WORLD(...)
+	zCT_OnLoad()
+end
+function events:PLAYER_REGEN_ENABLED(...)
+	if tonumber(_G["COMBAT_TEXT_SHOW_COMBAT_STATE"]) == 1 then
+		zCT_Text:AddMessage("-"..LEAVING_COMBAT,.1,1,.1)
+	end
+end
+function events:PLAYER_REGEN_DISABLED(...)
+	if tonumber(_G["COMBAT_TEXT_SHOW_COMBAT_STATE"]) == 1 then
+		zCT_Text:AddMessage("+"..ENTERING_COMBAT,1,.1,.1)
+	end
+end
+frame:SetScript("OnEvent", function(self, event, ...)
+ events[event](self, ...); -- call one of the functions above
+end);
+for k, v in pairs(events) do
+ frame:RegisterEvent(k); -- Register all events for which handlers have been defined
+end
 
 
