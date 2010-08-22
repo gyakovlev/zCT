@@ -124,7 +124,7 @@ function zCT_OnLoad()
 	end
 	if tonumber(_G["COMBAT_TEXT_SHOW_PERIODIC_ENERGIZE"]) == 1 then
 		debugprint("Enabling periodic energize")
-		zCT_Events["ENERGIZE"] = {frame = 3, prefix = "+", arg2 = true, r = .1, g = .1, b = 1}
+		zCT_Events["PERIODIC_ENERGIZE"] = {frame = 3, prefix = "+", arg2 = true, r = .1, g = .1, b = 1}
 	end
 	if tonumber(_G["COMBAT_TEXT_SHOW_HONOR_GAINED"]) == 1 then
 		debugprint("Enabling honor display")
