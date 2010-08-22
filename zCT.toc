@@ -2,7 +2,7 @@
 ## Title: zCT
 ## Notes: Simple combat text mod
 ## Author: Affli @ RU-Howling Fjord
-## Version: 0.1e
+## Version: 0.1f
 ## RequiredDeps: Blizzard_CombatText
 
 zCT.lua
