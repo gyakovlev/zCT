@@ -15,6 +15,8 @@ local function zCT_SetDamageFont()
 	CombatTextFont:SetFont(zCT_Font, zCT_DamageFontHeight,"OUTLINE")
 end
 zCT_SetDamageFont()
+
+--My debugging fancy printer, feel free to remove.
 local debugprint = function(msg)
     print("|cffC495DDz|rCT debug:", tostring(msg))
 end
