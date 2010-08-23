@@ -20,7 +20,7 @@ local function zCT_SetDamageFont()
 end
 zCT_SetDamageFont()
 
---[[My debugging fancy printer, feel free to remove.
+--[[My fancy debugging printer, feel free to remove.
 local debugprint = function(msg)
     print("|cffC495DDz|rCT debug:", tostring(msg))
 end]]
@@ -186,18 +186,18 @@ function events:UNIT_MANA(...)
 	if tonumber(_G["COMBAT_TEXT_SHOW_LOW_HEALTH_MANA"]) == 1 then
 		if ( arg1 == "player" ) then
 			local powerType, powerToken = UnitPowerType("player");
-				if ( powerToken == "MANA" and (UnitPower("player") / UnitPowerMax("player")) <= COMBAT_TEXT_LOW_MANA_THRESHOLD ) then
-					if ( not CombatText.lowMana ) then
-						messageType = "MANA_LOW";
-						zCT_Text:AddMessage(MANA_LOW,1,.1,.1);
-						CombatText.lowMana = 1;
-					end
-				else
-					CombatText.lowMana = nil;
+			if ( powerToken == "MANA" and (UnitPower("player") / UnitPowerMax("player")) <= COMBAT_TEXT_LOW_MANA_THRESHOLD ) then
+				if ( not CombatText.lowMana ) then
+					messageType = "MANA_LOW";
+					zCT_Text:AddMessage(MANA_LOW,1,.1,.1);
+					CombatText.lowMana = 1;
 				end
-				if ( not messageType ) then
-					return;
-				end
+			else
+				CombatText.lowMana = nil;
+			end
+			if ( not messageType ) then
+				return;
+			end
 			
 		end
 	end
