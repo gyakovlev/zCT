@@ -80,12 +80,13 @@ local function zCT_OnLoad()
 		zCT_Events["HEAL_CRIT"] = {frame = 2, prefix = "c+", arg3 = true, r = 0.1, g = 1, b = 0.1}
 		zCT_Events["PERIODIC_HEAL"] = {frame = 2, prefix =  "+", arg3 = true, r = 0.1, g = 1, b = 0.1}
 		zCT_Events["SPELL_CAST"] = {frame = 3, prefix = "+", arg2 = true, r = 1, g = .82, b = 0}
-
 	end
 	if tonumber(_G["COMBAT_TEXT_SHOW_AURAS"]) == 1 then
 		--debugprint("enabling auras")
 		zCT_Events["SPELL_AURA_START"] = {frame = 3, prefix = "+", arg2 = true, r = 1, g = .5, b = .5}
 		zCT_Events["SPELL_AURA_END"] = {frame = 3, prefix = "-", arg2 = true, r = .5, g = .5, b = .5}
+		zCT_Events["SPELL_AURA_START_HARMFUL"] = {frame = 1, prefix = "+", arg2 = true, r = 1, g = .1, b = .1}
+		zCT_Events["SPELL_AURA_END_HARMFUL"] = {frame = 1, prefix = "-", arg2 = true, r = .1, g = 1, b = .1}
 	end
 	if tonumber(_G["COMBAT_TEXT_SHOW_DODGE_PARRY_MISS"]) == 1 then
 		--debugprint("enabling dodge,parry,miss")
