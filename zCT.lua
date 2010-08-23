@@ -18,7 +18,7 @@ local function zCT_SetDamageFont()
 	COMBAT_TEXT_CRIT_MINHEIGHT = zCT_DamageFontHeight - 20
 --	CombatTextFont:SetFont(zCT_Font, zCT_DamageFontHeight,"OUTLINE")
 end
-zCT_SetDamageFont()
+--zCT_SetDamageFont()
 
 --[[My fancy debugging printer, feel free to remove.
 local debugprint = function(msg)
@@ -111,7 +111,7 @@ local function zCT_OnLoad()
 		zCT_Events["ABSORB"] = {frame = 1, prefix = "Absorb", 	spec = true, 		r = 1, 		g = 0.1, 	b = 0.1}
 		zCT_Events["SPELL_RESIST"] = {frame = 1, prefix = "Resist", spec = true, r = 0.79, g = 0.3, b = 0.85}
 		--Spell Block
-		zCT_Events["SPELL_ABSORBED"] = {frame = 1, prefix = "Absorb", spec = true, r = 0.79, g = 0.3, b = 0.85}
+		zCT_Events["SPELL_ABSORB"] = {frame = 1, prefix = "Absorb", spec = true, r = 0.79, g = 0.3, b = 0.85}
 	end
 	if tonumber(_G["COMBAT_TEXT_SHOW_ENERGIZE"]) == 1 then
 		--debugprint("Enabling energize")
