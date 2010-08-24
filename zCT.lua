@@ -7,7 +7,7 @@ Thanks to Shestak for showing me LightCT and inspiring me to make this mod.
 InterfaceOptionsCombatTextPanelFriendlyHealerNames:Hide()
 
 local zCT_Frames = {}
-local zCT_Font, zCT_FontSize, zCT_FontStyle = "Interface\\AddOns\\zCT\\text_font.ttf", 26, "OUTLINE"
+local zCT_Font, zCT_FontSize, zCT_FontStyle = "Interface\\AddOns\\zCT\\text_font.ttf", 24, "OUTLINE"
 local zCT_DamageFont = "Interface\\AddOns\\zCT\\damage_font.ttf"
 local zCT_DamageFontQuality = 100
 
@@ -27,32 +27,32 @@ local debugprint = function(msg)
 end]]
 
 
-local zCT_Damage = CreateFrame("ScrollingMessageFrame", "zCT_Damage", UIParent)
+local zCT_Damage = CreateFrame("ScrollingMessageFrame", "zCT_Damage", oUF_Tukz_player)
 zCT_Damage:SetFont(zCT_Font, zCT_FontSize, zCT_FontStyle)
 zCT_Damage:SetShadowColor(0, 0, 0, 0)
 zCT_Damage:SetFadeDuration(0.2)
 zCT_Damage:SetInsertMode"TOP"
 zCT_Damage:SetTimeVisible(3)
-zCT_Damage:SetMaxLines(192)
+zCT_Damage:SetMaxLines(128)
 zCT_Damage:SetSpacing(1)
 zCT_Damage:SetWidth(128)
-zCT_Damage:SetHeight(192)
+zCT_Damage:SetHeight(128)
 zCT_Damage:SetJustifyH("LEFT")
-zCT_Damage:SetPoint("CENTER", -384, -192)
+zCT_Damage:SetPoint("TOPLEFT", 0, 192)
 zCT_Frames[1] = zCT_Damage
 
-local zCT_Heal = CreateFrame("ScrollingMessageFrame", "zCT_Heal", UIParent)
+local zCT_Heal = CreateFrame("ScrollingMessageFrame", "zCT_Heal", oUF_Tukz_player)
 zCT_Heal:SetFont(zCT_Font, zCT_FontSize, zCT_FontStyle)
 zCT_Heal:SetShadowColor(0, 0, 0, 0)
 zCT_Heal:SetFadeDuration(0.2)
 zCT_Heal:SetInsertMode"TOP"
 zCT_Heal:SetTimeVisible(3)
-zCT_Heal:SetMaxLines(192)
+zCT_Heal:SetMaxLines(128)
 zCT_Heal:SetSpacing(1)
 zCT_Heal:SetWidth(128)
-zCT_Heal:SetHeight(192)
+zCT_Heal:SetHeight(128)
 zCT_Heal:SetJustifyH("RIGHT")
-zCT_Heal:SetPoint("CENTER", -256, -192)
+zCT_Heal:SetPoint("TOPRIGHT", 0, 192)
 zCT_Frames[2] = zCT_Heal
 
 local zCT_Text = CreateFrame("ScrollingMessageFrame", "zCT_Text", UIParent)
@@ -63,7 +63,7 @@ zCT_Text:SetInsertMode"TOP"
 zCT_Text:SetTimeVisible(3)
 zCT_Text:SetMaxLines(256)
 zCT_Text:SetSpacing(1)
-zCT_Text:SetWidth(512)
+zCT_Text:SetWidth(1024)
 zCT_Text:SetHeight(256)
 zCT_Text:SetJustifyH("CENTER")
 zCT_Text:SetPoint("CENTER", 0, 192)
