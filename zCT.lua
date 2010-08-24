@@ -7,18 +7,19 @@ Thanks to Shestak for showing me LightCT and inspiring me to make this mod.
 InterfaceOptionsCombatTextPanelFriendlyHealerNames:Hide()
 
 local zCT_Frames = {}
-local zCT_Font = "Interface\\AddOns\\zCT\\font.ttf"
-local zCT_DamageFontHeight = 25 --This number just inreases font quality.
+local zCT_Font, zCT_FontSize, zCT_FontStyle = "Interface\\AddOns\\zCT\\text_font.ttf", 26, "OUTLINE"
+local zCT_DamageFont = "Interface\\AddOns\\zCT\\damage_font.ttf"
+local zCT_DamageFontQuality = 100
 
 --Set unit damage and healing font
 local function zCT_SetDamageFont()
 	DAMAGE_TEXT_FONT = zCT_Font
-	COMBAT_TEXT_HEIGHT = zCT_DamageFontHeight
-	COMBAT_TEXT_CRIT_MAXHEIGHT = zCT_DamageFontHeight + 20
-	COMBAT_TEXT_CRIT_MINHEIGHT = zCT_DamageFontHeight - 20
---	CombatTextFont:SetFont(zCT_Font, zCT_DamageFontHeight,"OUTLINE")
+	COMBAT_TEXT_HEIGHT = zCT_DamageFontQuality
+	COMBAT_TEXT_CRIT_MAXHEIGHT = zCT_DamageFontQuality + 20
+	COMBAT_TEXT_CRIT_MINHEIGHT = zCT_DamageFontQuality - 20
+--	CombatTextFont:SetFont(zCT_Font, zCT_FontSize, zCT_FontStyle)
 end
---zCT_SetDamageFont()
+zCT_SetDamageFont()
 
 --[[My fancy debugging printer, feel free to remove.
 local debugprint = function(msg)
@@ -27,7 +28,7 @@ end]]
 
 
 local zCT_Damage = CreateFrame("ScrollingMessageFrame", "zCT_Damage", UIParent)
-zCT_Damage:SetFont(zCT_Font, 18, "OUTLINE")
+zCT_Damage:SetFont(zCT_Font, zCT_FontSize, zCT_FontStyle)
 zCT_Damage:SetShadowColor(0, 0, 0, 0)
 zCT_Damage:SetFadeDuration(0.2)
 zCT_Damage:SetInsertMode"TOP"
@@ -41,7 +42,7 @@ zCT_Damage:SetPoint("CENTER", -384, -192)
 zCT_Frames[1] = zCT_Damage
 
 local zCT_Heal = CreateFrame("ScrollingMessageFrame", "zCT_Heal", UIParent)
-zCT_Heal:SetFont(zCT_Font, 18, "OUTLINE")
+zCT_Heal:SetFont(zCT_Font, zCT_FontSize, zCT_FontStyle)
 zCT_Heal:SetShadowColor(0, 0, 0, 0)
 zCT_Heal:SetFadeDuration(0.2)
 zCT_Heal:SetInsertMode"TOP"
@@ -55,7 +56,7 @@ zCT_Heal:SetPoint("CENTER", -256, -192)
 zCT_Frames[2] = zCT_Heal
 
 local zCT_Text = CreateFrame("ScrollingMessageFrame", "zCT_Text", UIParent)
-zCT_Text:SetFont(zCT_Font, 20, "OUTLINE")
+zCT_Text:SetFont(zCT_Font, zCT_FontSize, zCT_FontStyle)
 zCT_Text:SetShadowColor(0, 0, 0, 0)
 zCT_Text:SetFadeDuration(0.2)
 zCT_Text:SetInsertMode"TOP"
@@ -238,7 +239,38 @@ function events:UNIT_HEALTH(...)
 			return;
 		end
 	end
-end		
+end
+function events:RUNE_POWER_UPDATE(...)
+	if tonumber(_G["SHOW_COMBAT_TEXT"]) == 1 then
+		if ( arg2 == true )  then
+			local info ={}
+			local runeType = GetRuneType(arg1);
+			message = COMBAT_TEXT_RUNE[runeType];
+			if( runeType == 1 ) then 
+				info.r = .75;
+				info.g = 0;
+				info.b = 0;
+			elseif( runeType == 2 ) then
+				info.r = .75;
+				info.g = 1;
+				info.b = 0;
+			elseif (runeType == 3 ) then
+				info.r = 0;
+				info.g = 1;
+				info.b = 1;
+			else	
+			end
+				if( runeType and runeType < 4 ) then
+				zCT_Text:AddMessage("+"..message, info.r ,info.g ,info.b)
+				else
+					return
+				end
+		else
+			return;
+		end
+	end		
+end
+	
 frame:SetScript("OnEvent", function(self, event, ...)
  events[event](self, ...); -- call one of the functions above
 end);
