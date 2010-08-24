@@ -257,16 +257,15 @@ function events:RUNE_POWER_UPDATE(...)
 			elseif (runeType == 3 ) then
 				info.r = 0;
 				info.g = 1;
-				info.b = 1;
-			else	
+				info.b = 1;	
 			end
-				if( runeType and runeType < 4 ) then
+			if( runeType and runeType < 4 ) then
 				zCT_Text:AddMessage("+"..message, info.r ,info.g ,info.b)
-				else
-					return
-				end
+			else
+				return
+			end
 		else
-			return;
+			return
 		end
 	end		
 end
