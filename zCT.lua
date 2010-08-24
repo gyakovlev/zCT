@@ -180,7 +180,25 @@ function events:PLAYER_REGEN_DISABLED(...)
 end
 function events:UNIT_COMBO_POINTS(...)
 	if tonumber(_G["COMBAT_TEXT_SHOW_COMBO_POINTS"]) == 1 then
-		zCT_Text:AddMessage(format(COMBAT_TEXT_COMBO_POINTS,GetComboPoints("player", target)),1,.82,.0)
+		local unit = ...;
+		if ( unit == "player" ) then
+			local comboPoints = GetComboPoints("player", "target");
+			if ( comboPoints > 0 ) then
+				messageType = "COMBO_POINTS";
+				data = comboPoints;
+				r, g, b = 1, .82, .0
+				
+				-- Show message as a crit if max combo points
+				if ( comboPoints == MAX_COMBO_POINTS ) then
+					r, g, b = 0, .82, 1
+				end
+				zCT_Text:AddMessage(format(COMBAT_TEXT_COMBO_POINTS,data),r ,g ,b)
+			else
+				return;
+			end
+		else
+			return;
+		end
 	end
 end
 function events:UNIT_MANA(...)
