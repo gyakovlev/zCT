@@ -188,7 +188,7 @@ function events:UNIT_COMBO_POINTS(...)
 				data = comboPoints;
 				r, g, b = 1, .82, .0
 				
-				-- Show message as a crit if max combo points
+				-- Change color if CP=5
 				if ( comboPoints == MAX_COMBO_POINTS ) then
 					r, g, b = 0, .82, 1
 				end
